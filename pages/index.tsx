@@ -1,33 +1,11 @@
 import { Product, HeroBanner, FooterBanner } from "../components";
 import { client } from "../lib/client";
 import { GetServerSideProps } from "next";
+import { BannerData, ProductData } from "../utils/types";
 
 type Props = {
-  products: {
-    _id: string;
-    _type: string;
-    details: string;
-    image: {}[];
-    name: string;
-    price: number;
-    slug: { _type: string; current: "string" };
-  }[];
-  bannerData: [
-    {
-      _id: string;
-      _type: string;
-      buttonText: string;
-      desc: string;
-      discount: string;
-      image: string;
-      largeText1: string;
-      largeText2: string;
-      midText: string;
-      product: string;
-      saleTime: string;
-      smallText: string;
-    }
-  ];
+  products: ProductData[];
+  bannerData: BannerData;
 };
 
 export default function Home({ products, bannerData }: Props) {
@@ -39,9 +17,11 @@ export default function Home({ products, bannerData }: Props) {
         <p>speakers of many variations</p>
       </div>
       <div className="products-container">
-        {products.map((product) => product.name)}
+        {products.map((product) => (
+          <Product key={product._id} product={product} />
+        ))}
       </div>
-      <FooterBanner />
+      <FooterBanner footerBanner={bannerData && bannerData[0]} />
     </>
   );
 }
@@ -52,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const bannerQuery = '*[_type == "banner"]';
   const bannerData = await client.fetch(bannerQuery);
 
-  // console.log(bannerData);
+  // console.log(products);
 
   return {
     props: { products, bannerData },

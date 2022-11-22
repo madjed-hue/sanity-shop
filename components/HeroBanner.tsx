@@ -1,22 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { urlFor } from "../lib/client";
+import { BannerProps } from "../utils/types";
 
 type Props = {
-  bannerData: {
-    _id: string;
-    _type: string;
-    buttonText: string;
-    desc: string;
-    discount: string;
-    image: string;
-    largeText1: string;
-    largeText2: string;
-    midText: string;
-    product: string;
-    saleTime: string;
-    smallText: string;
-  };
+  bannerData: BannerProps;
 };
 
 const HeroBanner = ({ bannerData }: Props) => {
@@ -26,10 +15,12 @@ const HeroBanner = ({ bannerData }: Props) => {
         <p className="beats-solo"> {bannerData.smallText} </p>
         <h3 className="mid-text">{bannerData.midText}</h3>
         <h1>{bannerData.largeText1}</h1>
-        <img
+        <Image
           className="hero-banner-image"
-          src={urlFor(bannerData.image)}
+          src={`${urlFor(bannerData.image)}`}
           alt="head-phone"
+          width={450}
+          height={450}
         />
         <div>
           <Link href={`/product/${bannerData.product}`}>
