@@ -10,6 +10,7 @@ import {
   AiOutlineStar,
 } from "react-icons/ai";
 import { Product } from "../../components";
+import { useStateContext } from "../../context/StateContext";
 
 type Props = {
   product: ProductDetails;
@@ -18,6 +19,7 @@ type Props = {
 
 const ProductDetails = ({ product, products }: Props) => {
   const { image, name, details, price } = product;
+  // const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
 
   const [index, setIndex] = useState<number>(0);
   return (
